@@ -9,7 +9,6 @@ def generate_fruit_graph(pd, px, dcc):
     df['dayofweek'] = pd.to_datetime(df['utctime(datetime)']).dt.day_name()
     data = df.groupby(['dayofweek'])["avgspeed"].mean()
 
-    # fig = px.bar(data, x="dayofweek", y="avgspeed", barmode="group")
     fig = px.bar(data)
     fig.update_layout(
         plot_bgcolor=colors['graph_bg'],
