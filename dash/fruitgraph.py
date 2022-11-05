@@ -29,7 +29,6 @@ def generateHeatmap(pd, px, dcc):
         font_color=colors['text']
     )
     return dcc.Graph(
-        id='example-graph',
         figure=fig
     )
 
@@ -51,6 +50,5 @@ def generateAverageSpeedOfDrivers(pd, px, dcc):
         font_color=colors['text']
     )
     return dcc.Graph(
-        id='example-graph',
         figure=fig
     )

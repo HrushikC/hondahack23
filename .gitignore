@@ -1,6 +1,3 @@
-v2x_data/**
-v2x_data.zip
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

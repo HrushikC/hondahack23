@@ -73,7 +73,7 @@ app.layout = html.Div(
                                 ),
                                 dcc.Graph(id="indicator-graphic"),
                             ],
-                            className="graph__container"
+                            className="graph__container padding__right"
                         ),
                         html.Div(
                             [
@@ -99,7 +99,7 @@ app.layout = html.Div(
                             className="graph__container"
                         ),
                     ],
-                    className="column histogram__direction"
+                    className="column"
                 ),
             ],
             className="app__content"

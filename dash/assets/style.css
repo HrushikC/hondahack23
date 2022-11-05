@@ -7,6 +7,11 @@ h6 {
     margin-top: 0;
 }
 
+.padding__right {
+    padding-right: 2em;
+
+}
+
 .app__container {
     margin: 3% 5%;
 }
