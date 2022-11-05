@@ -5,7 +5,7 @@ colors = {
     }
 
 def generateHeatmap(pd, px, dcc):
-    df = pd.read_csv('/Users/akhildamarla/Desktop/FinalCleanedDataIO.csv')
+    df = pd.read_csv('../data/FinalCleanedDataIO.csv')
 
     fig = px.density_mapbox(df, lat='endlatitude', lon='endlongitude', mapbox_style="stamen-terrain")
  
