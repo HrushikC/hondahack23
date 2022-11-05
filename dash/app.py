@@ -4,8 +4,14 @@
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
+from fruitgraph import generate_fruit_graph 
 
-app = Dash(__name__)
+app = Dash(
+    __name__,
+    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+)
+app.title = "DATA I/O 2022"
+
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
@@ -15,20 +21,19 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+app.layout = html.Div(
+    className="container",
+    children=[
+        html.H1(children='Hello Dash'),
 
-app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+        html.Div(children='''
+            Dash: A web application framework for your data.
+        '''),
 
-    html.Div(children='''
-        Dash: A web application framework for your data.
-    '''),
+        generate_fruit_graph(pd,px,dcc),
+    ],
+)
 
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
-])
 
 if __name__ == '__main__':
     app.run_server(debug=True)
