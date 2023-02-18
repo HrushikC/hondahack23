@@ -4,8 +4,10 @@ colors = {
     "graph_line": "#107ACE"
     }
 
+DATA_PATH = '/Users/hrushik/Desktop/Data-IO-2022/data/FinalCleanedDataIO.csv'
+
 def generate_fruit_graph(pd, px, dcc):
-    df = pd.read_csv('../data/FinalCleanedDataIO.csv')
+    df = pd.read_csv(DATA_PATH)
     df['dayofweek'] = pd.to_datetime(df['utctime(datetime)']).dt.day_name()
     data = df.groupby(['dayofweek'])["avgspeed"].mean()
 
@@ -20,7 +22,7 @@ def generate_fruit_graph(pd, px, dcc):
     )
 
 def generateHeatmap(pd, px, dcc):
-    df = pd.read_csv('../data/FinalCleanedDataIO.csv')
+    df = pd.read_csv(DATA_PATH)
 
     fig = px.density_mapbox(df, lat='endlatitude', lon='endlongitude', mapbox_style="stamen-terrain")
  
@@ -33,7 +35,7 @@ def generateHeatmap(pd, px, dcc):
     )
 
 def generateAverageSpeedOfDrivers(pd, px, dcc):
-    df = pd.read_csv('../data/FinalCleanedDataIO.csv')
+    df = pd.read_csv(DATA_PATH)
 
     df2 = df.groupby(['device'])['avgspeed_mph'].mean()
     dfUnder = df2[df2<=25]

@@ -4,8 +4,10 @@ colors = {
     "graph_line": "#107ACE"
     }
 
+DATA_PATH = '/Users/hrushik/Desktop/Data-IO-2022/data/FinalCleanedDataIO.csv'
+
 def generateHeatmap(pd, px, dcc):
-    df = pd.read_csv('../data/FinalCleanedDataIO.csv')
+    df = pd.read_csv(DATA_PATH)
 
     fig = px.density_mapbox(df, lat='endlatitude', lon='endlongitude', mapbox_style="stamen-terrain")
  
