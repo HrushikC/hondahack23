@@ -1,0 +1,1 @@
+- pywin32 and pywinpty packages need to be added to requirements.txt for windows os.
