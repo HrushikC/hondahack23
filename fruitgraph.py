@@ -4,7 +4,7 @@ colors = {
     "graph_line": "#107ACE"
     }
 
-DATA_PATH = '/Users/hrushik/Desktop/Data-IO-2022/data/FinalCleanedDataIO.csv'
+DATA_PATH = '/data/FinalCleanedDataIO.csv'
 
 def generate_fruit_graph(pd, px, dcc):
     df = pd.read_csv(DATA_PATH)

@@ -16,7 +16,8 @@ server = app.server
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.read_csv("/Users/hrushik/Desktop/Data-IO-2022/data/FinalCleanedDataIO.csv") # had to use full path for some reason
+filepath = 'data/FinalCleanedDataIO.csv'
+df = pd.read_csv(filepath) # had to use full path for some reason
 
 app.layout = html.Div(
     [
@@ -138,5 +139,5 @@ def update_graph(xaxis_column_name, yaxis_column_name, xaxis_type, yaxis_type):
     return fig
 
 
-# if __name__ == '__main__':
-#     app.run_server(debug=True)
+if __name__ == '__main__':
+    app.run_server(debug=True)
