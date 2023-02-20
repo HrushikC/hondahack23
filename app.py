@@ -10,8 +10,8 @@ app = Dash(
     __name__,
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
 )
-server = app.server
 app.title = "DATA I/O 2022"
+server = app.server
 
 
 # assume you have a "long-form" data frame
@@ -138,5 +138,5 @@ def update_graph(xaxis_column_name, yaxis_column_name, xaxis_type, yaxis_type):
     return fig
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# if __name__ == '__main__':
+#     app.run_server(debug=True)
