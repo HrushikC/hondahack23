@@ -78,7 +78,7 @@ app.layout = html.Div(
                         ),
                         html.Div(
                             [
-                                generateAverageSpeedOfDrivers(pd,px,dcc),
+                                # generateAverageSpeedOfDrivers(pd,px,dcc),
                             ],
                             className="graph__container"
                         ),
@@ -89,13 +89,13 @@ app.layout = html.Div(
                     [
                         html.Div(
                             [
-                                generateHeatmap(pd,px,dcc),
+                                # generateHeatmap(pd,px,dcc),
                             ],
                             className="graph__container"
                         ),
                         html.Div(
                             [
-                                generate_fruit_graph(pd,px,dcc),
+                                # generate_fruit_graph(pd,px,dcc),
                             ],
                             className="graph__container"
                         ),
