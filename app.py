@@ -4,7 +4,7 @@
 from dash import Dash, html, dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
-from fruitgraph import generate_fruit_graph, generateHeatmap, generateAverageSpeedOfDrivers
+# from fruitgraph import generate_fruit_graph, generateHeatmap, generateAverageSpeedOfDrivers
 
 app = Dash(
     __name__,
