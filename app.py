@@ -47,7 +47,7 @@ app.layout = html.Div(
                                         html.Div(
                                             [
                                                 dcc.Dropdown(
-                                                    df.columns.unique(),
+                                                    # df.columns.unique(),
                                                     "device",
                                                     id="xaxis-column",
                                                 ),
@@ -60,7 +60,7 @@ app.layout = html.Div(
                                         html.Div(
                                             [
                                                 dcc.Dropdown(
-                                                    df.columns.unique(),
+                                                    # df.columns.unique(),
                                                     "device",
                                                     id="yaxis-column",
                                                 ),
@@ -117,10 +117,10 @@ app.layout = html.Div(
     Input("yaxis-type", "value"),
 )
 def update_graph(xaxis_column_name, yaxis_column_name, xaxis_type, yaxis_type):
-    filterDF = df[[xaxis_column_name, yaxis_column_name]]
+    # filterDF = df[[xaxis_column_name, yaxis_column_name]]
 
     fig = px.scatter(
-        filterDF,
+        # filterDF,
         x=xaxis_column_name,
         y=yaxis_column_name,
     )
