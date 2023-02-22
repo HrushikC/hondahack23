@@ -2,9 +2,14 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 from dash import Dash, html, dcc, html, Input, Output
-import plotly.express as px
+import numpy as np
 import pandas as pd
-from main_viz import line_map, generateHeatmap, generateAverageSpeedOfDrivers
+import plotly.express as px
+import plotly.graph_objects as go
+from scipy.stats import linregress
+
+import dynamicGraph
+from main_viz import map_scatter, day_box_plot, month_box, bubble_chart
 
 app = Dash(
     __name__,
@@ -21,112 +26,65 @@ server = app.server
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 # had to use full path for some reason
-df = pd.read_csv("./data/FinalCleanedDataIO.csv")
+# df = pd.read_csv("./data/FinalCleanedDataIO.csv")
 
 app.layout = \
-html.Div([
     html.Div([
         html.Div([
-            html.H4(app_heading,
-                className="app__header__title"),
-            html.P(
-                "Analytics Dashboard for the honda dataset.",
-                className="app__header__title--grey",
-            ),
-        ], className="app__header__desc column")
-    ], className="app__header"),
-    html.Div([
+            html.Div([
+                html.H4(app_heading,
+                        className="app__header__title"
+                        ),
+                html.P(
+                    "Analytics Dashboard for the honda dataset.",
+                    className="app__header__title--grey",
+                ),
+            ], className="app__header__desc column"
+            )
+        ], className="app__header"
+        ),
+        html.Div(
+            [
+            map_scatter(pd, px, dcc),
+        ], className=graph_container
+        ),
         html.Div([
-            # Big graph
             html.Div([
                 html.Div([
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                df.columns.unique(),
-                                "device",
-                                id="xaxis-column",
-                            ),
-                            dcc.RadioItems(
-                                ["Linear", "Log"], "Linear", id="xaxis-type", inline=True
-                            ),
-                        ],
-                        style={"width": "48%",
-                               "display": "inline-block"},
-                            ),
-                    html.Div(
-                        [
-                            dcc.Dropdown(
-                                df.columns.unique(),
-                                "device",
-                                id="yaxis-column",
-                            ),
-                            dcc.RadioItems(
-                                ["Linear", "Log"], "Linear", id="yaxis-type", inline=True
-                            ),
-                        ],
-                        style={
-                            "width": "48%", "float": "right", "display": "inline-block"},
-                            ),
-                                ]
-                            ),
-                            dcc.Graph(id="indicator-graphic"),
-                        ], className = graph_container
-                            ),
-                    html.Div(
-                        [
-                            generateAverageSpeedOfDrivers(pd, px, dcc),
-                        ], className = graph_container
-                    ),
-                ], className="column"
+                    dynamicGraph.get_layout(pd, go, dcc, html),
+                ], className=graph_container
+                ),
+            ], className="column"
             ),
-            html.Div(
-                [
-                    html.Div(
-                        [
-                            generateHeatmap(pd, px, dcc),
-                        ], className = graph_container
-                    ),
-                    html.Div(
-                        [
-                            line_map(pd, px, dcc),
-                        ], className = graph_container
-                    ),
-                ], className="column"
+            html.Div([
+                html.Div([
+                    day_box_plot(go, pd, np, dcc),
+                ], className=graph_container
+                ),
+            # html.Div(
+            #     [
+            #         bubble_chart(pd, px, dcc),
+            #     ], className=graph_container
+            # ),
+            ], className="column"
             ),
         ], className="app__content"
-    ),
-], className="app__container"
-)
+        ),
+        html.Div(
+            [
+                month_box(pd, px, dcc),
+            ], className=graph_container
+        ),
+    ], className="app__container"
+    )
 
-
+# Define the callbacks
 @app.callback(
-    Output("indicator-graphic", "figure"),
-    Input("xaxis-column", "value"),
-    Input("yaxis-column", "value"),
-    Input("xaxis-type", "value"),
-    Input("yaxis-type", "value"),
+    Output("graph", "figure"), [
+        Input("xaxis", "value"), Input("yaxis", "value")]
 )
-def update_graph(xaxis_column_name, yaxis_column_name, xaxis_type, yaxis_type):
-    filterDF = df[[xaxis_column_name, yaxis_column_name]]
-
-    fig = px.scatter(
-        filterDF,
-        x=xaxis_column_name,
-        y=yaxis_column_name,
-    )
-
-    fig.update_layout(
-        margin={"l": 40, "b": 40, "t": 10, "r": 0}, hovermode="closest")
-
-    fig.update_xaxes(
-        title=xaxis_column_name, type="linear" if xaxis_type == "Linear" else "log"
-    )
-
-    fig.update_yaxes(
-        title=yaxis_column_name, type="linear" if yaxis_type == "Linear" else "log"
-    )
-
+def update_graph(xaxis, yaxis):
+    fig = dynamicGraph.update_figure(xaxis, yaxis, pd, go, np, linregress)
     return fig
 
 
