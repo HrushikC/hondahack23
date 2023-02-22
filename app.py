@@ -4,14 +4,17 @@
 from dash import Dash, html, dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
-from fruitgraph import generate_fruit_graph, generateHeatmap, generateAverageSpeedOfDrivers
+from main_viz import line_map, generateHeatmap, generateAverageSpeedOfDrivers
 
 app = Dash(
     __name__,
     meta_tags=[{"name": "viewport",
                 "content": "width=device-width, initial-scale=1"}],
 )
-app.title = "DATA I/O 2022"
+app_heading = "Honda Data Challenge 2023"
+graph_container = "graph__container"
+
+app.title = app_heading
 server = app.server
 
 
@@ -24,7 +27,7 @@ app.layout = \
 html.Div([
     html.Div([
         html.Div([
-            html.H4("Data I/O 2022",
+            html.H4(app_heading,
                 className="app__header__title"),
             html.P(
                 "Analytics Dashboard for the honda dataset.",
@@ -50,30 +53,30 @@ html.Div([
                         ],
                         style={"width": "48%",
                                "display": "inline-block"},
-                                    ),
-                                    html.Div(
-                                        [
-                                            dcc.Dropdown(
-                                                df.columns.unique(),
-                                                "device",
-                                                id="yaxis-column",
-                                            ),
-                                            dcc.RadioItems(
-                                                ["Linear", "Log"], "Linear", id="yaxis-type", inline=True
-                                            ),
-                                        ],
-                                        style={
-                                            "width": "48%", "float": "right", "display": "inline-block"},
-                                    ),
+                            ),
+                    html.Div(
+                        [
+                            dcc.Dropdown(
+                                df.columns.unique(),
+                                "device",
+                                id="yaxis-column",
+                            ),
+                            dcc.RadioItems(
+                                ["Linear", "Log"], "Linear", id="yaxis-type", inline=True
+                            ),
+                        ],
+                        style={
+                            "width": "48%", "float": "right", "display": "inline-block"},
+                            ),
                                 ]
                             ),
                             dcc.Graph(id="indicator-graphic"),
-                        ], className="graph__container padding__right"
-                    ),
+                        ], className = graph_container
+                            ),
                     html.Div(
                         [
                             generateAverageSpeedOfDrivers(pd, px, dcc),
-                        ], className="graph__container"
+                        ], className = graph_container
                     ),
                 ], className="column"
             ),
@@ -82,12 +85,12 @@ html.Div([
                     html.Div(
                         [
                             generateHeatmap(pd, px, dcc),
-                        ], className="graph__container"
+                        ], className = graph_container
                     ),
                     html.Div(
                         [
-                            generate_fruit_graph(pd, px, dcc),
-                        ], className="graph__container"
+                            line_map(pd, px, dcc),
+                        ], className = graph_container
                     ),
                 ], className="column"
             ),

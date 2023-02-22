@@ -5,21 +5,31 @@ colors = {
     }
 
 DATA_PATH = './data/FinalCleanedDataIO.csv'
+NEW_DATA_PATH = './data/route_summary.csv'
 
-def generate_fruit_graph(pd, px, dcc):
-    df = pd.read_csv(DATA_PATH)
-    df['dayofweek'] = pd.to_datetime(df['utctime(datetime)']).dt.day_name()
-    data = df.groupby(['dayofweek'])["avgspeed"].mean()
-
-    fig = px.bar(data)
-    fig.update_layout(
-        plot_bgcolor=colors['graph_bg'],
-        paper_bgcolor=colors['graph_bg'],
-        font_color=colors['text']
-    )
+def line_map(pd, px, dcc):
+    # import plotly.express as px
+    df = px.data.gapminder().query("year == 2007")
+    fig = px.line_geo(df, locations="iso_alpha",
+                    color="continent", # "continent" is one of the columns of gapminder
+                    projection="orthographic")
     return dcc.Graph(
         figure=fig
     )
+    # fig.show()
+    # df = pd.read_csv(DATA_PATH)
+    # df['dayofweek'] = pd.to_datetime(df['utctime(datetime)']).dt.day_name()
+    # data = df.groupby(['dayofweek'])["avgspeed"].mean()
+
+    # fig = px.bar(data)
+    # fig.update_layout(
+    #     plot_bgcolor=colors['graph_bg'],
+    #     paper_bgcolor=colors['graph_bg'],
+    #     font_color=colors['text']
+    # )
+    # return dcc.Graph(
+    #     figure=fig
+    # )
 
 def generateHeatmap(pd, px, dcc):
     df = pd.read_csv(DATA_PATH)
